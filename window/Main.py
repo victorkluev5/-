@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import *
 import random
-from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QTimer, Qt
 import string
 
 class Main(QDialog):
@@ -40,7 +40,10 @@ class Main(QDialog):
 class Captcha(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
+
         layout = QVBoxLayout()
+
         self.captcha = QLabel(str(random.randint(1000,9999)))
         self.captcha_edit = QLineEdit()
         self.captcha_btn = QPushButton("Проверить")
@@ -72,7 +75,6 @@ class Captcha(QMainWindow):
 
     def timer_tick(self):
         self.timer.start(1000)
-        self.timer_counter = 10
         self.count -= 1
         self.timer_label.setText(str(self.count))
 
