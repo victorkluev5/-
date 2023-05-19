@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import *
 import random
 from PyQt6.QtCore import QTimer, Qt
 import string
+from test_car import test_car
 
 class Main(QDialog):
     def __init__(self):
@@ -11,17 +12,17 @@ class Main(QDialog):
         self.setWindowTitle("окно")
 
         label_login = QLabel("Login:")
-        login_edit = QLineEdit()
+        self.login_edit = QLineEdit()
         label_password = QLabel("Password:")
-        password_edit = QLineEdit()
+        self.password_edit = QLineEdit()
         button_auth = QPushButton("Enter")
         button_exit = QPushButton("Exit")
         
         layout = QVBoxLayout()
         layout.addWidget(label_login)
-        layout.addWidget(login_edit)
+        layout.addWidget(self.login_edit)
         layout.addWidget(label_password)
-        layout.addWidget(password_edit)
+        layout.addWidget(self.password_edit)
         layout.addWidget(button_auth)
         layout.addWidget(button_exit)
 
@@ -30,12 +31,32 @@ class Main(QDialog):
 
         self.setLayout(layout)
         
-    def auth(self):        
-        self.test = Captcha()
-        self.test.show()
+    def auth(self):
+        if self.login_edit.text() == "user" and self.password_edit.text() == "user":
+            self.okno = test_car()
+            self.okno.show()
+            self.close()
+
+        else:
+            self.test = Captcha()
+            self.test.show()
         
     def exit(self):
         quit()
+
+# class Window(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+        
+#         layout = QVBoxLayout()
+
+#         self.label = QLabel("1 ctroka")
+
+#         layout.addWidget(self.label)
+
+#         widget = QWidget()
+#         widget.setLayout(layout)
+#         self.setCentralWidget(widget)
 
 class Captcha(QMainWindow):
     def __init__(self):
