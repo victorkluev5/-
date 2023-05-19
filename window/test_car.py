@@ -12,18 +12,18 @@ class test_car(QMainWindow):
         self.total_questions = 3
         self.answers = []
 
-        self.question_label = QLabel()
-        self.answer_radio_buttons = []
+        self.label = QLabel()
+        self.btn_next = []
         self.next_button = QPushButton("Далее")
         self.next_button.setDisabled(True)
 
         layout = QVBoxLayout()
-        layout.addWidget(self.question_label)
+        layout.addWidget(self.label)
 
         for i in range(4):
             radio_button = QRadioButton()
             radio_button.clicked.connect(self.enable_next_button)
-            self.answer_radio_buttons.append(radio_button)
+            self.btn_next.append(radio_button)
             layout.addWidget(radio_button)
 
         layout.addWidget(self.next_button)
@@ -39,7 +39,7 @@ class test_car(QMainWindow):
             },
             {
                 "question": "Какой бюджет у вас на автомобиль?",
-                "answers": ["До 20 000$", "20 000$ - 40 000$", "40 000$ - 60 000$", "Более 60 000$"]
+                "answers": ["До 300 000 руб", "300 000 руб - 700 000 руб", "700 000 руб - 1 000 000 руб", "Более 1 000 000 руб"]
             },
             {
                 "question": "Какие опции вам необходимы?",
@@ -51,17 +51,20 @@ class test_car(QMainWindow):
 
         self.next_button.clicked.connect(self.next_question)
 
+        with open ('style.css') as style:
+            self.setStyleSheet(style.read())
+
     def load_question(self, question_index):
-        self.question_label.setText(self.questions[question_index]["question"])
+        self.label.setText(self.questions[question_index]["question"])
         answers = self.questions[question_index]["answers"]
 
         for i in range(4):
             if i < len(answers):
-                self.answer_radio_buttons[i].setText(answers[i])
-                self.answer_radio_buttons[i].setChecked(False)
-                self.answer_radio_buttons[i].setHidden(False)
+                self.btn_next[i].setText(answers[i])
+                self.btn_next[i].setChecked(False)
+                self.btn_next[i].setHidden(False)
             else:
-                self.answer_radio_buttons[i].setHidden(True)
+                self.btn_next[i].setHidden(True)
 
     def enable_next_button(self):
         self.next_button.setDisabled(False)
@@ -78,8 +81,8 @@ class test_car(QMainWindow):
 
     def get_selected_answer(self):
         for i in range(4):
-            if self.answer_radio_buttons[i].isChecked():
-                return self.answer_radio_buttons[i].text()
+            if self.btn_next[i].isChecked():
+                return self.btn_next[i].text()
 
     def show_result(self):
         result = "Результаты:\n"
@@ -90,4 +93,4 @@ class test_car(QMainWindow):
        
         with open('resultate.txt', 'w') as f: 
             resultat = [result] 
-            f.writelines(resultat) 
+            f.writelines(resultat)
